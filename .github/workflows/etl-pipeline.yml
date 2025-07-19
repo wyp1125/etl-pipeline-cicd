@@ -13,7 +13,7 @@ jobs:
       - name: Install zip tool
         uses: montudor/action-zip@v1
       - name: Create Zip file for Lambda function
-        run: zip code.zip src/etl_raw_to_rawplus.py
+        run: zip -j code.zip src/etl_raw_to_rawplus.py
       - name: AWS CLI v2
         uses: imehedi/actions-awscli-v2@latest
         with:
