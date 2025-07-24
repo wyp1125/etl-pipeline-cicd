@@ -30,3 +30,7 @@ jobs:
         run: "aws glue update-job \
             --job-name etl_rawplus_to_dest \
             --job-update '{\"Role\":\"glue-service-role\",\"Command\": {\"Name\": \"glueetl\", \"ScriptLocation\": \"s3://bdx-cicd/etl_glue_job.py\"}}'"
+      - name: Update Step Function
+        run: "aws stepfunctions update-state-machine \
+            --state-machine-arn arn:aws:states:us-east-1:925680695682:stateMachine:demo-etl \
+            --definition file://src/etl_step_function.json"
