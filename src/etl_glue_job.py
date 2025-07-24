@@ -40,6 +40,5 @@ sql='''
 df1=spark.sql(sql)
 # Write data to S3 as parquet and a glue table
 df1.write.option("path", output_path).mode("overwrite").saveAsTable(f"{database_name}.{table_name}")
-#df1.write.parquet(output_path, mode="overwrite").saveAsTable(f"{database_name}.{table_name}")
 
 job.commit()
