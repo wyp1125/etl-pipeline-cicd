@@ -29,4 +29,4 @@ jobs:
       - name: Update Glue job
         run: "aws glue update-job \
             --job-name etl_raw_to_rawplus \
-            --job-update '{\"Command\": {\"Name\": \"glueetl\", \"ScriptLocation\": \"s3://bdx-cicd/etl_glue_job.py\", \"Role\": \"arn:aws:iam::925680695682:role/glue-service-role\"}}'"
+            --job-update '{\"Role\":\"glue-service-role\",\"Command\": {\"Name\": \"glueetl\", \"ScriptLocation\": \"s3://bdx-cicd/etl_glue_job.py\"}}'"
