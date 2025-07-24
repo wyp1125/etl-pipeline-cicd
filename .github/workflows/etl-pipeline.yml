@@ -28,5 +28,5 @@ jobs:
         run: "aws s3 cp src/etl_glue_job.py s3://bdx-cicd/etl_glue_job.py"
       - name: Update Glue job
         run: "aws glue update-job \
-            --job-name etl_rawplus_to_dest \
-            --job-update '{\"Command\": {\"Name\": \"glueetl\", \"ScriptLocation\": \"s3://bdx-cicd/etl_glue_job.py\"}}'"
+            --job-name etl_raw_to_rawplus \
+            --job-update '{\"Command\": {\"Name\": \"glueetl\", \"ScriptLocation\": \"s3://bdx-cicd/etl_glue_job.py\", \"Role\": \"arn:aws:iam::925680695682:role/glue-service-role\"}}'"
