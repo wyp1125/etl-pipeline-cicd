@@ -1,0 +1,45 @@
+{
+  "Comment": "A description of my state machine",
+  "StartAt": "Lambda Invoke",
+  "States": {
+    "Lambda Invoke": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "ResultPath": "$.Lambda",
+      "Parameters": {
+        "Payload.$": "$",
+        "FunctionName": "arn:aws:lambda:us-east-1:925680695682:function:etl_raw_to_rawplus:$LATEST"
+      },
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "Lambda.ServiceException",
+            "Lambda.AWSLambdaException",
+            "Lambda.SdkClientException",
+            "Lambda.TooManyRequestsException"
+          ],
+          "IntervalSeconds": 1,
+          "MaxAttempts": 3,
+          "BackoffRate": 2,
+          "JitterStrategy": "FULL"
+        }
+      ],
+      "Next": "Glue StartJobRun"
+    },
+    "Glue StartJobRun": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun",
+      "Parameters": {
+        "JobName": "etl_rawplus_to_dest",
+        "Arguments": {
+          "--glue_database.$": "$.glue_database",
+          "--glue_table.$": "$.glue_table",
+          "--input_path.$": "$.Lambda.Payload.source_path",
+          "--output_path.$": "$.Lambda.Payload.target_path"
+        }
+      },
+      "End": true
+    }
+  },
+  "QueryLanguage": "JSONPath"
+}
