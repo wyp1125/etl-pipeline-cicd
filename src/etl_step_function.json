@@ -8,7 +8,7 @@
       "ResultPath": "$.Lambda",
       "Parameters": {
         "Payload.$": "$",
-        "FunctionName": "arn:aws:lambda:us-east-1:925680695682:function:etl_raw_to_rawplus:$LATEST"
+        "FunctionName": "arn:aws:lambda:us-east-1:925680695682:function:etl_raw_to_rawplus"
       },
       "Retry": [
         {
